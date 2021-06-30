@@ -1,3 +1,7 @@
-# main file runs all the code
+
+import random
+import tkinter as tk
+
+
 
 print("Hello World")
