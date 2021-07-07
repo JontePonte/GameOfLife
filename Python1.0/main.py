@@ -4,12 +4,12 @@ import random
 class App(tk.Tk):
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
-        self.rows = 40
-        self.columns = 40
+        self.rows = 30
+        self.columns = 30
         self.color_foreground = "white"
         self.color_background = "black"
-        self.delay = 100
-        self.start_white_share = 0.01
+        self.delay = 10
+        self.start_white_share = 0.02
 
         self.cellwidth = 15
         self.cellheight = 15
