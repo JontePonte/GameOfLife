@@ -1,9 +1,50 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://Main.gd" type="Script" id=1]
+[ext_resource path="res://icon.png" type="Texture" id=1]
 
-[node name="Main" type="Control"]
-script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[sub_resource type="TileSet" id=2]
+0/name = "icon.png 0"
+0/texture = ExtResource( 1 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 0, 0, 64, 64 )
+0/tile_mode = 0
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shape_offset = Vector2( 0, 0 )
+0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+0/shape_one_way = false
+0/shape_one_way_margin = 0.0
+0/shapes = [  ]
+0/z_index = 0
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Node
+
+
+var game_h = GlobalVar.game_heigth
+var game_w = GlobalVar.game_width
+
+var rect_size = GlobalVar.rect_size
+
+
+func _ready():
+	randomize()
+	for x in range(game_w):
+		for y in range(game_h):
+			var scene = load(\"res://Square.tscn\")
+			var rect = scene.instance()
+			add_child(rect)
+			rect.set_position( Vector2(x*rect_size, y*rect_size) )
+	
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+#func _process(delta):
+#	pass
+"
+
+[node name="Main" type="TileMap"]
+tile_set = SubResource( 2 )
+format = 1
+script = SubResource( 1 )
