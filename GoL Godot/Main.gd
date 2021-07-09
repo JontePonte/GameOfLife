@@ -2,6 +2,7 @@ extends TileMap
 
 
 const TILE_SIZE = 64
+var rand_prob = 0.2
 
 export(int) var width 
 export(int) var height 
@@ -34,17 +35,38 @@ func _input(event):
 	if event.is_action_pressed("click"):
 		var pos = (get_local_mouse_position()/TILE_SIZE).floor()
 		set_cellv(pos, 1-get_cellv(pos))
-
+	if event.is_action_pressed("randomize"):
+		randomize_field(rand_prob)
+	if event.is_action_pressed("blackout"):
+		randomize_field(0)
+	
 
 func _process(_delta):
 	update_field()
+
+
+func randomize_field(prob):
+	var rand_field = []
+	for _x in range(width):
+		var rand_field_col = []
+		for _y in range(height):
+			if randf() < prob:
+				rand_field_col.append(1)
+			else:
+				rand_field_col.append(0)
+		rand_field.append(rand_field_col)
+	
+	# update tilemap
+	for x in range(width):
+		for y in range(height):
+			set_cell(x, y, rand_field[x][y])
+
 
 
 func update_field():
 	if !playing:
 		return
 	
-	# adjust state in temp_field
 	for x in range(width):
 		for y in range(height):
 			var live_neighbors = 0
@@ -70,4 +92,3 @@ func update_field():
 	for x in range(width):
 		for y in range(height):
 			set_cell(x, y, temp_field[x][y])
-			
